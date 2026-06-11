@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MAIN DESK - Planner Management System</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght=300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#f4f7fb;
+color:#222;
+}
+
+/* LOGIN */
+
+.login{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:
+linear-gradient(
+rgba(8,31,92,.85),
+rgba(8,31,92,.85)
+),
+url("https://images.unsplash.com/photo-1517048676732-d65bc937f952");
+background-size:cover;
+background-position:center;
+}
+
+
+.logo{
+text-align:center;
+margin-bottom:25px;
+}
+
+.logo-main{
+font-size:72px;
+font-weight:800;
+color:#f4b400;
+line-height:1;
+}
+
+.logo-title{
+font-size:42px;
+font-weight:800;
+color:#081f5c;
+}
+
+.logo-sub{
+font-size:13px;
+color:#777;
+}
+
+
+
+/* DASHBOARD */
+
+#app{
+display:none;
+}
+
+.sidebar{
+position:fixed;
+left:0;
+top:0;
+width:250px;
+height:100vh;
+background:#081f5c;
+color:white;
+padding:25px;
+}
+
+.brand{
+margin-bottom:40px;
+}
+
+.brand h1{
+font-size:30px;
+}
+
+.brand span{
+color:#f4b400;
+}
+
+.brand p{
+font-size:12px;
+opacity:.8;
+}
+
+.menu-item{
+padding:14px;
+margin-bottom:10px;
+border-radius:12px;
+cursor:pointer;
+transition:.3s;
+}
+
+.menu-item:hover{
+background:#3559e0;
+}
+
+.active-menu{
+background:#3559e0;
+}
+
+.logout-btn{
+position:absolute;
+bottom:25px;
+left:25px;
+right:25px;
+background:#dc2626;
+padding:12px;
+border-radius:12px;
+text-align:center;
+cursor:pointer;
+}
+
+.main{
+margin-left:250px;
+padding:30px;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.header h1{
+font-size:30px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+margin-bottom:25px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:18px;
+box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.card h3{
+font-size:15px;
+color:#777;
+}
+
+.card h1{
+margin-top:10px;
+font-size:35px;
+}
+
+.section{
+background:white;
+padding:25px;
+border-radius:18px;
+box-shadow:0 3px 12px rgba(0,0,0,.08);
+margin-bottom:20px;
+}
+
+.section-title{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.add-btn{
+background:#3559e0;
+padding:10px 18px;
+border:none;
+border-radius:10px;
+color:white;
+cursor:pointer;
+}
+
+.back-btn {
+background:#6b7280;
+padding:10px 18px;
+border:none;
+border-radius:10px;
+color:white;
+cursor:pointer;
+margin-right:10px;
+}
+
+.day-column{
+background:#f8faff;
+border:1px solid #e5e7eb;
+border-radius:15px;
+padding:15px;
+}
+
+.day-column h3{
+text-align:center;
+margin-bottom:15px;
+color:#081f5c;
+}
+
+.planner-board{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:15px;
+}
+
+.task-card{
+background:white;
+padding:12px;
+border-radius:12px;
+margin-bottom:10px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.task-name{
+font-weight:600;
+}
+
+.task-area{
+font-size:12px;
+color:#777;
+margin-top:4px;
+}
+
+.completed-item{
+padding:12px;
+background:#f8faff;
+border-radius:12px;
+margin-bottom:10px;
+}
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.5);
+justify-content:center;
+align-items:flex-start;
+z-index:9999;
+overflow-y: auto;
+}
+.modal-content{
+background:white;
+width:500px;
+padding:25px;
+border-radius:18px;
+margin:50px auto;
+max-height: 85vh;
+overflow-y: auto;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea{
+width:100%;
+padding:12px;
+margin-top:5px;
+margin-bottom:15px;
+border:1px solid #ddd;
+border-radius:10px;
+font-size:14px;
+}
+
+/* OPERATION FIELD WRAPPER */
+.operation-input-group {
+display: flex;
+gap: 10px;
+align-items: center;
+margin-bottom: 10px;
+}
+.operation-input-group input {
+margin: 0;
+flex: 1;
+}
+.btn-remove-op {
+background: #dc2626;
+color: white;
+border: none;
+border-radius: 8px;
+padding: 12px;
+cursor: pointer;
+font-weight: bold;
+}
+.btn-add-op-field {
+background: #16a34a;
+color: white;
+border: none;
+border-radius: 8px;
+padding: 8px 12px;
+cursor: pointer;
+font-size: 13px;
+font-weight: 600;
+margin-bottom: 15px;
+display: inline-block;
+}
+
+/* LOGIN */
+
+.login-page{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:
+linear-gradient(
+rgba(8,31,92,.85),
+rgba(8,31,92,.85)
+),
+url("https://images.unsplash.com/photo-1504307651254-35680f356dfd");
+background-size:cover;
+background-position:center;
+}
+
+.login-card{
+width:420px;
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+.login-card label{
+display:block;
+margin-top:15px;
+margin-bottom:6px;
+font-weight:600;
+text-align:left;
+color:#333;
+}
+
+.login-card input{
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:10px;
+font-size:14px;
+margin-bottom:12px;
+}
+
+.login-card input:focus{
+outline:none;
+border-color:#3559e0;
+box-shadow:0 0 0 3px rgba(53,89,224,.15);
+}
+.login-btn{
+width:100%;
+padding:12px;
+background:#3559e0;
+border:none;
+color:white;
+border-radius:10px;
+cursor:pointer;
+font-weight:600;
+}
+
+.error{
+margin-top:10px;
+color:red;
+text-align:center;
+}
+
+/* DASHBOARD */
+
+.hidden{
+display:none;
+}
+
+.date-card{
+background:white;
+padding:12px 18px;
+border-radius:12px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+font-weight:600;
+}
+
+/* KPI */
+
+.kpi-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+margin-top:20px;
+margin-bottom:25px;
+}
+
+.kpi-card{
+background:white;
+padding:20px;
+border-radius:18px;
+display:flex;
+align-items:center;
+gap:15px;
+box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.icon-box{
+width:55px;
+height:55px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:24px;
+background:#eef4ff;
+}
+
+.kpi-card.success .icon-box{
+background:#e8fff0;
+}
+
+.kpi-card.warning .icon-box{
+background:#fff6e6;
+}
+
+.kpi-card.progress .icon-box{
+background:#f0ebff;
+}
+
+.kpi-card h4{
+color:#666;
+font-size:14px;
+}
+
+.kpi-card h1{
+margin-top:5px;
+font-size:32px;
+}
+
+.kpi-card small{
+color:#888;
+}
+
+/* DASHBOARD GRID */
+
+.dashboard-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+/* ACTIVE TASK */
+
+.header-flex{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.task-table{
+width:100%;
+border-collapse:collapse;
+table-layout:fixed;
+}
+
+.task-table th{
+background:#081f5c;
+color:white;
+padding:14px;
+}
+
+.task-table th:nth-child(1){
+text-align:left;
+}
+
+.task-table td{
+padding:14px;
+border-bottom:1px solid #eee;
+text-align:center;
+}
+.task-table th:nth-child(1){
+width:35%;
+text-align:left;
+}
+
+.task-table th:nth-child(2){
+width:20%;
+}
+
+.task-table th:nth-child(3){
+width:10%;
+}
+
+.task-table th:nth-child(4){
+width:15%;
+}
+
+.task-table th:nth-child(5){
+width:280px;
+}
+.task-table td{
+padding:12px;
+border-bottom:1px solid #eee;
+}
+
+.task-table tr:hover{
+background:#f8faff;
+}
+
+/* BUTTON */
+
+.complete-btn,
+.delete-btn{
+padding:8px 12px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:13px;
+font-weight:600;
+width:90px;
+margin:2px;
+}
+.complete-btn{
+background:#16a34a;
+color:white;
+}
+
+.delete-btn{
+background:#dc2626;
+color:white;
+}
+
+/* PMR & WBI STYLING */
+.area-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 20px;
+margin-top: 15px;
+}
+
+.area-card {
+background: white;
+border-radius: 16px;
+padding: 30px 20px;
+text-align: center;
+box-shadow: 0 4px 12px rgba(0,0,0,.06);
+cursor: pointer;
+transition: 0.3s;
+border: 1px solid #e5e7eb;
+}
+
+.area-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 8px 24px rgba(53,89,224,.15);
+border-color: #3559e0;
+}
+
+.area-card .icon {
+font-size: 32px;
+margin-bottom: 12px;
+}
+
+.area-card h3 {
+font-size: 20px;
+color: #081f5c;
+font-weight: 700;
+}
+
+.area-card p {
+font-size: 13px;
+color: #666;
+margin-top: 6px;
+}
+
+.pmr-table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 15px;
+background: white;
+box-shadow: 0 2px 8px rgba(0,0,0,.05);
+border-radius: 8px;
+overflow: hidden;
+}
+
+.pmr-table th {
+background: #3559e0;
+color: white;
+padding: 14px 12px;
+text-align: left;
+font-size: 14px;
+}
+
+.pmr-table td {
+padding: 12px;
+border-bottom: 1px solid #eee;
+font-size: 14px;
+}
+
+.pmr-table tr:hover {
+background: #f8faff;
+}
+
+/* PO / DOKUMEN TAB STYLING */
+.po-tabs {
+display: flex;
+gap: 15px;
+margin-bottom: 25px;
+border-bottom: 2px solid #e5e7eb;
+padding-bottom: 10px;
+}
+
+.po-tab-item {
+padding: 12px 24px;
+font-size: 16px;
+font-weight: 600;
+color: #6b7280;
+background: transparent;
+border: none;
+cursor: pointer;
+transition: 0.3s;
+border-radius: 8px;
+}
+
+.po-tab-item:hover {
+color: #3559e0;
+background: rgba(53,89,224,0.05);
+}
+
+.po-tab-item.active-tab {
+color: white;
+background: #3559e0;
+box-shadow: 0 4px 12px rgba(53,89,224,0.2);
+}
+
+.download-btn {
+background: #16a34a;
+color: white;
+border: none;
+padding: 6px 12px;
+border-radius: 6px;
+cursor: pointer;
+font-weight: 600;
+font-size: 13px;
+text-decoration: none;
+display: inline-block;
+}
+
+.download-btn:hover {
+background: #15803d;
+}
+
+/* SUB-TABLE FILES STYLING */
+.file-list-box {
+background: #f9fafb;
+padding: 10px;
+border-radius: 8px;
+border: 1px dashed #cbd5e1;
+margin-top: 5px;
+text-align: left;
+}
+.file-item {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 6px 10px;
+background: white;
+border: 1px solid #e2e8f0;
+border-radius: 6px;
+margin-bottom: 5px;
+font-size: 13px;
+}
+.file-item:last-child {
+margin-bottom: 0;
+}
+
+@media(max-width:1200px){
+.kpi-grid{ grid-template-columns:repeat(2,1fr); }
+.dashboard-grid{ grid-template-columns:1fr; }
+.area-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media(max-width:768px){
+.sidebar{ width:100%; height:auto; position:relative; }
+.main{ margin-left:0; }
+.kpi-grid{ grid-template-columns:1fr; }
+.area-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="login-page" id="loginPage">
+<div class="login-card">
+<div class="logo">
+<div class="logo-main">MD</div>
+<div class="logo-title">MAIN DESK</div>
+<div class="logo-sub">Maintenance Planner Assistant</div>
+</div>
+<label>Username</label>
+<input type="text" id="username">
+<label>Password</label>
+<input type="password" id="password">
+<button class="login-btn" onclick="login()">Sign In</button>
+<div class="error" id="errorMsg"></div>
+</div>
+</div>
+
+<div id="app">
+
+<div class="sidebar">
+<div class="brand">
+<h1>MD <span>MAINDESK</span></h1>
+<p>Maintenance Planner Assistant</p>
+</div>
+<div class="menu-item active-menu" onclick="showPage('dashboardPage',this)">🏠 Dashboard</div>
+<div class="menu-item" onclick="showPage('activePage',this)">📋 Active Tasks</div>
+<div class="menu-item" onclick="showPage('completedPage',this)">✅ Completed Tasks</div>
+<div class="menu-item" onclick="showPage('pmPage',this)">🔔 PMR & WBI</div>
+<div class="menu-item" onclick="showPage('poPage',this)">📄 Dokumen PO</div>
+<div class="logout-btn" onclick="logout()">🚪 Logout</div>
+</div>
+
+<div class="main">
+
+<div id="dashboardPage">
+<div class="header">
+<div>
+<h1>Good Morning, Naufal! 👋</h1>
+<p style="color:#666;margin-top:5px;">Let's make today productive.</p>
+</div>
+<div class="date-card" id="todayText"></div>
+</div>
+<div class="kpi-grid">
+<div class="kpi-card"><div class="icon-box">📋</div><div><h4>Tasks Today</h4><h1 id="totalTask">0</h1><small>Total Tasks</small></div></div>
+<div class="kpi-card success"><div class="icon-box">✅</div><div><h4>Completed</h4><h1 id="completedTask">0</h1><small>Tasks Done</small></div></div>
+<div class="kpi-card warning"><div class="icon-box">⏰</div><div><h4>Pending</h4><h1 id="pendingTask">0</h1><small>Need Action</small></div></div>
+<div class="kpi-card progress"><div class="icon-box">📈</div><div><h4>Progress</h4><h1 id="progressTask">0%</h1><small>Completion Rate</small></div></div>
+</div>
+<div class="dashboard-grid">
+<div class="section"><div class="section-title">📌 Permanent Schedule Today</div><div id="permanentToday"></div></div>
+<div class="section"><div class="section-title">📋 Additional Tasks Today</div><div id="todaySummary"></div></div>
+</div>
+</div>
+
+<div id="activePage" class="hidden">
+<div class="section">
+<div class="header-flex">
+<h2>Active Task Management</h2>
+<button class="add-btn" onclick="openModal()">+ Add Task</button>
+</div>
+<table class="task-table">
+<thead><tr><th>Task</th><th>Area</th><th>Priority</th><th>Start</th><th>Action</th></tr></thead>
+<tbody id="activeTaskList"></tbody>
+</table>
+</div>
+</div>
+
+<div id="completedPage" class="hidden">
+<div class="section">
+<h2>Completed Tasks</h2><br>
+<div id="completedList"></div>
+</div>
+</div>
+
+<div id="pmPage" class="hidden">
+    <div id="pmrMainMenu">
+        <div class="section">
+            <div class="header-flex">
+                <h2>PMR & WBI Management</h2>
+                <button class="add-btn" onclick="openPmrModal('')">+ Add Data</button>
+            </div>
+            <p style="color: #666; margin-top: -10px;">Pilih area kerja untuk melihat rincian tabel jadwal</p>
+            
+            <div class="area-grid">
+                <div class="area-card" onclick="viewPmrArea('NR.EL-01')"><div class="icon">📍</div><h3>NR.EL-01</h3><p>Klik untuk membuka tabel</p></div>
+                <div class="area-card" onclick="viewPmrArea('NR.EL-02')"><div class="icon">📍</div><h3>NR.EL-02</h3><p>Klik untuk membuka tabel</p></div>
+                <div class="area-card" onclick="viewPmrArea('NR.EL-03')"><div class="icon">📍</div><h3>NR.EL-03</h3><p>Klik untuk membuka tabel</p></div>
+                <div class="area-card" onclick="viewPmrArea('NR.EL-04')"><div class="icon">📍</div><h3>NR.EL-04</h3><p>Klik untuk membuka tabel</p></div>
+                <div class="area-card" onclick="viewPmrArea('NR.EL-05')"><div class="icon">📍</div><h3>NR.EL-05</h3><p>Klik untuk membuka tabel</p></div>
+                <div class="area-card" onclick="viewPmrArea('NR.EL-07')"><div class="icon">📍</div><h3>NR.EL-07</h3><p>Klik untuk membuka tabel</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="pmrAreaView" class="hidden">
+        <div class="section">
+            <div class="header-flex">
+                <div style="display: flex; align-items: center;">
+                    <button class="back-btn" onclick="backToPmrMenu()">◀ Kembali</button>
+                    <h2 id="currentAreaTitle" style="color:#081f5c;">📍 AREA NR.EL-04</h2>
+                </div>
+                <div>
+                    <button class="add-btn" onclick="openPmrModal(selectedActiveArea)">+ Add Data</button>
+                    <button class="delete-btn" style="width:auto; padding:10px 18px;" onclick="clearAreaPmrData()">🗑️ Clear Area</button>
+                </div>
+            </div>
+            
+            <table class="pmr-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%">Maintenance Plan</th>
+                        <th style="width: 50%">Operation</th>
+                        <th style="width: 15%">Periode</th>
+                        <th style="width: 10%; text-align:center;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="pmrAreaTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="poPage" class="hidden">
+    <div class="po-tabs">
+        <button class="po-tab-item active-tab" id="tabKontrakBtn" onclick="switchPoTab('kontrak')">📁 Kontrak</button>
+        <button class="po-tab-item" id="tabDocContractBtn" onclick="switchPoTab('docContract')">📦 Doc Contract (Folder Management)</button>
+    </div>
+
+    <div id="tabContentKontrak">
+        <div class="section">
+            <div class="header-flex">
+                <h2>Manajemen Kontrak</h2>
+                <button class="add-btn" onclick="openContractModal()">+ Add Kontrak</button>
+            </div>
+            <div id="contractList"></div>
+        </div>
+    </div>
+
+    <div id="tabContentDocContract" class="hidden">
+        <div class="section">
+            <div class="header-flex">
+                <h2>Manajemen Folder Dokumen Kontrak</h2>
+                <button class="add-btn" style="background:#16a34a;" onclick="openDocUploadModal()">📁 Buat Folder & Upload PDF</button>
+            </div>
+            <p style="color: #666; margin-top:-10px; margin-bottom:20px;">Daftar repositori folder kontrak kerja beserta kumpulan berkas PDF di dalamnya.</p>
+            
+            <table class="pmr-table">
+                <thead>
+                    <tr>
+                        <th style="width: 35%">Nama Folder Kontrak</th>
+                        <th style="width: 45%">Daftar File PDF Terunggah</th>
+                        <th style="width: 20%; text-align:center;">Aksi Folder</th>
+                    </tr>
+                </thead>
+                <tbody id="uploadedDocTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</div> 
+
+<div class="modal" id="taskModal">
+<div class="modal-content">
+<h2>Add Task</h2>
+<label>Nama Pekerjaan</label><input type="text" id="taskName">
+<label>Area</label>
+<select id="taskArea">
+<option>NR.EL-01</option><option>NR.EL-04</option><option>NR.EL-05</option><option>NR.EL-07</option><option>NR.WS-04</option><option>UTILITY</option><option>PRODUCTION</option>
+</select>
+<label>Priority</label>
+<select id="taskPriority"><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select>
+<label>Tanggal Mulai</label><input type="date" id="startDate">
+<label>Tanggal Selesai</label><input type="date" id="endDate">
+<br>
+<button class="add-btn" onclick="addTask()">Simpan</button>
+<button class="delete-btn" onclick="closeModal()">Tutup</button>
+</div>
+</div>
+
+<div class="modal" id="contractModal">
+<div class="modal-content">
+<h2>Tambah Kontrak Kerja</h2>
+<label>Nama Vendor</label><input type="text" id="vendorName">
+<label>Informasi Kontrak</label><input type="text" id="contractInfo" placeholder="Basic on contract No. 028/AGMT/CMA/IV/2026 valid until 30 Sept 2026"><br>
+<button class="add-btn" onclick="addContract()">Simpan</button>
+<button class="delete-btn" onclick="closeContractModal()">Tutup</button>
+</div>
+</div>
+
+<div class="modal" id="docUploadModal">
+<div class="modal-content">
+<h2>Buat Folder & Upload PDF Kontrak</h2>
+<br>
+<label>Nama Kontrak (Menjadi Nama Folder)</label>
+<input type="text" id="docCustomName" placeholder="Contoh: CIVA">
+<label>Pilih File PDF Dokumen Kontrak (Bisa pilih > 2 file bersamaan)</label>
+<input type="file" id="docFileInput" accept=".pdf" multiple>
+<br>
+<button class="add-btn" onclick="saveUploadedDocFile()">Simpan Folder</button>
+<button class="delete-btn" onclick="closeDocUploadModal()">Tutup</button>
+</div>
+</div>
+
+<div class="modal" id="pmrModal">
+<div class="modal-content">
+<h2>Form Add PMR & WBI</h2>
+<br>
+<label>Pilih Area</label>
+<select id="pmrAreaSelect">
+<option value="NR.EL-01">NR.EL-01</option>
+<option value="NR.EL-02">NR.EL-02</option>
+<option value="NR.EL-03">NR.EL-03</option>
+<option value="NR.EL-04">NR.EL-04</option>
+<option value="NR.EL-05">NR.EL-05</option>
+<option value="NR.EL-07">NR.EL-07</option>
+</select>
+
+<label>Maintenance Plan (Opsional)</label>
+<input type="text" id="pmrFormPlan" placeholder="Contoh: PMR-NREL4-01">
+
+<label>Operation / Deskripsi Tugas</label>
+<div id="operationFieldsContainer"></div>
+<button type="button" class="btn-add-op-field" onclick="addOperationField()">+ Tambah Operation</button>
+
+<label>Periode (Opsional)</label>
+<input type="text" id="pmrFormPeriode" placeholder="Contoh: 1 Month, 2 Week, dll">
+
+<br>
+<button class="add-btn" onclick="saveManualPmr()">Simpan Data</button>
+<button class="delete-btn" onclick="closePmrModal()">Tutup</button>
+</div>
+</div>
+
+</div> 
+
+<script>
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let completedTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
+let contracts = JSON.parse(localStorage.getItem("contracts")) || [];
+let pmrData = JSON.parse(localStorage.getItem("pmrData")) || [];
+let uploadedDocs = JSON.parse(localStorage.getItem("uploadedDocs")) || [];
+
+let selectedActiveArea = ""; 
+
+const weeklyTasks={
+1:["Aging Notification","Aging WO","Konfirmasi WO"],
+2:["Create PR","Create PO","Input Pengajuan Barang Minimal 10"],
+3:["Create PO","Input Pengajuan Barang Minimal 10","Prepare Weekly NR.EL-01","Prepare Weekly NR.EL-05"],
+4:["Pembuatan Jadwal PM Stop","Prepare Weekly NR.EL-04","Prepare Weekly NR.WS-04"],
+5:["Fiksasi Jadwal PM Stop","Create PO","Prepare Weekly NR.EL-07"]
+};
+
+function saveData(){
+localStorage.setItem("contracts",JSON.stringify(contracts));
+localStorage.setItem("tasks",JSON.stringify(tasks));
+localStorage.setItem("completedTasks",JSON.stringify(completedTasks));
+localStorage.setItem("pmrData",JSON.stringify(pmrData));
+localStorage.setItem("uploadedDocs",JSON.stringify(uploadedDocs));
+}
+
+function login(){
+let user = document.getElementById("username").value.toLowerCase();
+let pass = document.getElementById("password").value;
+if(user==="naufal asyraf" && pass==="123"){
+document.getElementById("loginPage").style.display="none";
+document.getElementById("app").style.display="block";
+localStorage.setItem("isLoggedIn","true");
+loadPermanentTasks();
+renderDashboard();
+}else{
+document.getElementById("errorMsg").innerHTML="Username atau Password Salah";
+}
+}
+
+function showPage(page,el){
+["dashboardPage","activePage","completedPage","pmPage","poPage"].forEach(id=>{
+document.getElementById(id).style.display="none";
+});
+document.getElementById(page).style.display="block";
+document.querySelectorAll(".menu-item").forEach(x=>x.classList.remove("active-menu"));
+el.classList.add("active-menu");
+
+if(page === 'pmPage') {
+backToPmrMenu();
+}
+if(page === 'poPage') {
+switchPoTab('kontrak');
+}
+}
+
+function openModal(){ document.getElementById("taskModal").style.display="flex"; }
+function closeModal(){ document.getElementById("taskModal").style.display="none"; }
+
+function addTask(){
+const taskName = document.getElementById("taskName").value;
+if(taskName===""){ alert("Nama pekerjaan wajib diisi"); return; }
+tasks.push({
+name:taskName,
+area:document.getElementById("taskArea").value,
+priority:document.getElementById("taskPriority").value,
+start:document.getElementById("startDate").value,
+end:document.getElementById("endDate").value,
+type:"additional"
+});
+saveData();
+renderDashboard();
+closeModal();
+}
+
+function deleteTask(index){
+if(!confirm("Hapus task ini?")) return;
+tasks.splice(index,1);
+saveData();
+renderDashboard();
+}
+
+function completeTask(index){
+completedTasks.push({...tasks[index],completedDate:new Date().toLocaleDateString("id-ID")});
+tasks.splice(index,1);
+saveData();
+renderDashboard();
+}
+
+function loadPermanentTasks(){
+let day = new Date().getDay();
+if(!weeklyTasks[day]) return;
+let today = new Date().toISOString().split("T")[0];
+weeklyTasks[day].forEach(task=>{
+let foundTask = tasks.find(x => x.name===task && x.start===today);
+let exist = foundTask ? foundTask.type==="permanent" : false;
+if(!exist){
+tasks.push({name:task,area:"Permanent Schedule",priority:"medium",start:today,type:"permanent"});
+}
+});
+saveData();
+}
+
+function renderPermanentToday(){
+let html="";
+let today = new Date().toISOString().split("T")[0];
+tasks.filter(x => x.type==="permanent" && x.start===today).forEach(task=>{
+html+=`<div class="task-card priority-medium"><div class="task-name">${task.name}</div><div class="task-area">${task.area}</div></div>`;
+});
+document.getElementById("permanentToday").innerHTML=html;
+}
+
+function renderTodaySummary(){
+let html="";
+let today = new Date().toISOString().split("T")[0];
+tasks.filter(x => x.type!=="permanent" && x.start===today).forEach(task=>{
+html+=`<div class="task-card priority-${task.priority}"><div class="task-name">${task.name}</div><div class="task-area">${task.area}</div></div>`;
+});
+if(html===""){ html=`<div class="task-card">Tidak ada task tambahan hari ini</div>`; }
+document.getElementById("todaySummary").innerHTML=html;
+}
+
+function renderActiveTasks(){
+let html="";
+tasks.forEach((task,index)=>{
+html+=`<tr><td style="text-align:left;">${task.name}</td><td>${task.area}</td><td>${task.priority}</td><td>${task.start}</td><td><button class="complete-btn" onclick="completeTask(${index})">Complete</button><button class="delete-btn" onclick="deleteTask(${index})">Delete</button></td></tr>`;
+});
+document.getElementById("activeTaskList").innerHTML=html;
+}
+
+function renderCompleted(){
+let html="";
+completedTasks.forEach(task=>{
+html+=`<div class="task-card"><div class="task-name">${task.name}</div><div class="task-area">${task.area}</div><small>Completed : ${task.completedDate}</small></div>`;
+});
+document.getElementById("completedList").innerHTML=html;
+}
+
+function updateKPI(){
+let total = tasks.length + completedTasks.length;
+let completed = completedTasks.length;
+let pending = tasks.length;
+let progress = total > 0 ? Math.round((completed/total)*100) : 0;
+document.getElementById("totalTask").innerHTML=total;
+document.getElementById("completedTask").innerHTML=completed;
+document.getElementById("pendingTask").innerHTML=pending;
+document.getElementById("progressTask").innerHTML=progress+"%";
+}
+
+function logout(){
+if(!confirm("Yakin ingin logout?")) return;
+localStorage.removeItem("isLoggedIn");
+document.getElementById("app").style.display="none";
+document.getElementById("loginPage").style.display="flex";
+document.getElementById("username").value="";
+document.getElementById("password").value="";
+}
+
+function renderDashboard(){
+document.getElementById("todayText").innerHTML=new Date().toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+renderPermanentToday();
+renderTodaySummary();
+renderActiveTasks();
+renderCompleted();
+renderContracts();
+renderUploadedDocsTable();
+renderPmrTables(); 
+updateKPI();
+}
+
+function openContractModal(){ document.getElementById("contractModal").style.display="flex"; }
+function closeContractModal(){ document.getElementById("contractModal").style.display="none"; }
+
+function addContract(){
+const vendor = document.getElementById("vendorName").value;
+const info = document.getElementById("contractInfo").value;
+if(vendor==="" || info===""){ alert("Lengkapi data"); return; }
+contracts.push({vendor:vendor,info:info});
+saveData();
+renderContracts();
+closeContractModal();
+}
+
+function deleteContract(index){
+if(!confirm("Hapus kontrak?")) return;
+contracts.splice(index,1);
+saveData();
+renderContracts();
+}
+
+function renderContracts(){
+let html="";
+contracts.forEach((item,index)=>{
+html+=`<div class="task-card"><div class="task-name">${item.vendor}</div><div class="task-area">${item.info}</div><br><button class="delete-btn" onclick="deleteContract(${index})">Delete</button></div>`;
+});
+document.getElementById("contractList").innerHTML=html;
+}
+
+
+/* =======================================================
+   LOGIK MULTI-OPERATION DINAMIS PMR & WBI
+======================================================= */
+
+function openPmrModal(defaultArea = "") {
+document.getElementById("pmrModal").style.display = "flex";
+document.getElementById("pmrFormPlan").value = "";
+document.getElementById("pmrFormPeriode").value = "";
+
+const container = document.getElementById("operationFieldsContainer");
+container.innerHTML = "";
+addOperationField(); 
+
+if(defaultArea !== "") {
+document.getElementById("pmrAreaSelect").value = defaultArea;
+}
+}
+
+function addOperationField() {
+const container = document.getElementById("operationFieldsContainer");
+const div = document.createElement("div");
+div.className = "operation-input-group";
+div.innerHTML = `
+    <input type="text" class="pmr-op-input" placeholder="Masukkan deskripsi tugas / operation">
+    <button type="button" class="btn-remove-op" onclick="this.parentElement.remove()">✕</button>
+`;
+container.appendChild(div);
+}
+
+function closePmrModal() {
+document.getElementById("pmrModal").style.display = "none";
+}
+
+function viewPmrArea(areaName) {
+selectedActiveArea = areaName;
+document.getElementById("pmrMainMenu").style.display = "none";
+document.getElementById("pmrAreaView").style.display = "block";
+document.getElementById("currentAreaTitle").innerText = "📍 AREA " + areaName;
+renderPmrTables();
+}
+
+function backToPmrMenu() {
+selectedActiveArea = "";
+document.getElementById("pmrAreaView").style.display = "none";
+document.getElementById("pmrMainMenu").style.display = "block";
+}
+
+function saveManualPmr() {
+const area = document.getElementById("pmrAreaSelect").value;
+const plan = document.getElementById("pmrFormPlan").value.trim();
+const periode = document.getElementById("pmrFormPeriode").value.trim();
+
+const inputElements = document.querySelectorAll(".pmr-op-input");
+let operations = [];
+inputElements.forEach(input => {
+    let val = input.value.trim();
+    if(val !== "") operations.push(val);
+});
+
+if(operations.length === 0) {
+alert("Minimal harus mengisi 1 kolom Operation!");
+return;
+}
+
+operations.forEach((opText, index) => {
+    pmrData.push({
+        area: area,
+        plan: (index === 0) ? plan : "", 
+        operation: opText,
+        periode: (index === 0) ? periode : "" 
+    });
+});
+
+saveData();
+document.getElementById("pmrModal").style.display = "none";
+
+if(selectedActiveArea === area) {
+renderPmrTables();
+} else {
+viewPmrArea(area);
+}
+alert("Berhasil menyimpan data PMR!");
+}
+
+function deletePmrItem(index) {
+if (!confirm("Hapus baris data PMR ini?")) return;
+pmrData.splice(index, 1);
+saveData();
+renderPmrTables();
+}
+
+function clearAreaPmrData() {
+if (selectedActiveArea === "") return;
+if (!confirm("⚠️ Hapus seluruh data di dalam Area " + selectedActiveArea + "?")) return;
+pmrData = pmrData.filter(item => item.area !== selectedActiveArea);
+saveData();
+renderPmrTables();
+}
+
+function renderPmrTables() {
+const tableBody = document.getElementById("pmrAreaTableBody");
+if(!tableBody || selectedActiveArea === "") return;
+
+const filteredData = pmrData.map((item, idx) => ({...item, originalIndex: idx})).filter(item => item.area === selectedActiveArea);
+
+if (filteredData.length === 0) {
+tableBody.innerHTML = "<tr><td colspan='4' style='color:#777; text-align:center; padding: 20px;'>Belum ada data di area ini. Silakan klik + Add Data.</td></tr>";
+return;
+}
+
+let html = "";
+filteredData.forEach(item => {
+let planDisplay = item.plan ? `<strong>${item.plan}</strong>` : "";
+let periodeDisplay = item.periode ? `<span style="background:#eef4ff; padding:4px 8px; border-radius:6px; color:#3559e0; font-weight:600; font-size:12px;">${item.periode}</span>` : "";
+
+html += `
+<tr>
+<td>${planDisplay}</td>
+<td style="text-align: left;">${item.operation}</td>
+<td>${periodeDisplay}</td>
+<td style="text-align:center;">
+<button class="delete-btn" style="padding: 4px 8px; width: auto; margin:0;" onclick="deletePmrItem(${item.originalIndex})">Delete</button>
+</td>
+</tr>
+`;
+});
+tableBody.innerHTML = html;
+}
+
+
+/* =======================================================
+   LOGIK SYSTEM MULTI-PDF ASLI BISA DOWNLOAD NYATA (FIXED)
+======================================================= */
+
+function switchPoTab(targetTab) {
+    if(targetTab === 'kontrak') {
+        document.getElementById("tabKontrakBtn").classList.add("active-tab");
+        document.getElementById("tabDocContractBtn").classList.remove("active-tab");
+        document.getElementById("tabContentKontrak").style.display = "block";
+        document.getElementById("tabContentDocContract").style.display = "none";
+        renderContracts();
+    } else {
+        document.getElementById("tabKontrakBtn").classList.remove("active-tab");
+        document.getElementById("tabDocContractBtn").classList.add("active-tab");
+        document.getElementById("tabContentKontrak").style.display = "none";
+        document.getElementById("tabContentDocContract").style.display = "block";
+        renderUploadedDocsTable();
+    }
+}
+
+function openDocUploadModal() {
+    document.getElementById("docUploadModal").style.display = "flex";
+    document.getElementById("docCustomName").value = "";
+    document.getElementById("docFileInput").value = "";
+}
+
+function closeDocUploadModal() {
+    document.getElementById("docUploadModal").style.display = "none";
+}
+
+function saveUploadedDocFile() {
+    const customFolderName = document.getElementById("docCustomName").value.trim();
+    const fileInput = document.getElementById("docFileInput");
+
+    if(customFolderName === "") {
+        alert("Harap masukkan Nama Kontrak untuk penamaan folder!");
+        return;
+    }
+    if(fileInput.files.length === 0) {
+        alert("Harap pilih minimal 1 atau lebih berkas .pdf!");
+        return;
+    }
+
+    let filesArray = [];
+    let loadedCount = 0;
+    const totalFiles = fileInput.files.length;
+
+    for(let i = 0; i < totalFiles; i++) {
+        let currentFile = fileInput.files[i];
+        if(!currentFile.name.toLowerCase().endsWith('.pdf')) {
+            alert(`Berkas "${currentFile.name}" bukan format PDF! Semua berkas wajib berformat PDF.`);
+            return;
+        }
+
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            filesArray.push({
+                fileName: currentFile.name,
+                fileData: e.target.result
+            });
+            loadedCount++;
+
+            if(loadedCount === totalFiles) {
+                uploadedDocs.push({
+                    folderName: customFolderName,
+                    files: filesArray,
+                    date: new Date().toLocaleDateString("id-ID")
+                });
+
+                try {
+                    saveData();
+                    renderUploadedDocsTable();
+                    closeDocUploadModal();
+                    alert(`Sukses membuat folder "${customFolderName}" dengan ${filesArray.length} file PDF nyata!`);
+                } catch(error) {
+                    alert("Gagal menyimpan! Ukuran file PDF total terlalu besar untuk penyimpanan lokal browser (Limit browser ~5MB). Coba gunakan file PDF berukuran kecil.");
+                }
+            }
+        };
+        reader.readAsDataURL(currentFile);
+    }
+}
+
+function deleteUploadedDoc(index) {
+    if(!confirm("Hapus seluruh folder beserta semua file PDF di dalamnya?")) return;
+    uploadedDocs.splice(index, 1);
+    saveData();
+    renderUploadedDocsTable();
+}
+
+function renderUploadedDocsTable() {
+    const tableBody = document.getElementById("uploadedDocTableBody");
+    if(!tableBody) return;
+
+    if(uploadedDocs.length === 0) {
+        tableBody.innerHTML = "<tr><td colspan='3' style='color:#777; text-align:center; padding: 20px;'>Belum ada folder kontrak dibuat.</td></tr>";
+        return;
+    }
+
+    let html = "";
+    uploadedDocs.forEach((doc, index) => {
+        let filesHtml = `<div class="file-list-box">`;
+        if(doc.files && doc.files.length > 0) {
+            doc.files.forEach((fileObj) => {
+                let name = fileObj.fileName || "dokumen.pdf";
+                let dataUri = fileObj.fileData || "#";
+                
+                filesHtml += `
+                <div class="file-item">
+                    <span>📄 ${name}</span>
+                    <a class="download-btn" style="padding: 3px 8px; font-size:11px;" href="${dataUri}" download="${name}">📥 Download File</a>
+                </div>`;
+            });
+        } else {
+            filesHtml += `<span style="color:#aaa; font-size:12px;">Folder Kosong</span>`;
+        }
+        filesHtml += `</div>`;
+
+        html += `
+        <tr>
+            <td style="text-align: left; vertical-align: top; font-weight: bold; color: #081f5c;">📁 ${doc.folderName}<br><small style="color:#777; font-weight:normal;">Dibuat: ${doc.date}</small></td>
+            <td>${filesHtml}</td>
+            <td style="text-align: center; vertical-align: middle;">
+                <button class="delete-btn" style="padding: 6px 12px; width: auto;" onclick="deleteUploadedDoc(${index})">Hapus Folder</button>
+            </td>
+        </tr>
+        `;
+    });
+    tableBody.innerHTML = html;
+}
+
+window.onload = function() {
+    if(localStorage.getItem("isLoggedIn") === "true") {
+        document.getElementById("loginPage").style.display="none";
+        document.getElementById("app").style.display="block";
+        loadPermanentTasks();
+        renderDashboard();
+    }
+}
+</script>
+</body>
+</html>
